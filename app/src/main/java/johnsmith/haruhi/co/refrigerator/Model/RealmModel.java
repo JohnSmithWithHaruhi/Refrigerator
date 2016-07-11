@@ -1,7 +1,5 @@
 package johnsmith.haruhi.co.refrigerator.Model;
 
-import java.util.UUID;
-
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -29,9 +27,9 @@ public class RealmModel {
         return realm.where(Item.class).equalTo("id", id).findFirst();
     }
 
-    public void setData(String name, String time) {
+    public void setData(String id, String name, String time) {
         realm.beginTransaction();
-        Item item = realm.createObject(Item.class, UUID.randomUUID().toString());
+        Item item = realm.createObject(Item.class, id);
         item.setName(name);
         item.setTime(time);
         realm.commitTransaction();
@@ -49,11 +47,10 @@ public class RealmModel {
         realm.commitTransaction();
     }
 
-    public void deleteAllData(){
+    public void deleteAllData() {
         realm.beginTransaction();
         realm.deleteAll();
         realm.commitTransaction();
     }
-
 
 }

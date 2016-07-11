@@ -4,16 +4,18 @@ import android.view.View;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import johnsmith.haruhi.co.refrigerator.Model.RealmModel;
 import johnsmith.haruhi.co.refrigerator.Model.Unit.Item;
+import johnsmith.haruhi.co.refrigerator.Unit.CardViewAdapter;
 import johnsmith.haruhi.co.refrigerator.Unit.InputFragment;
 
 /**
  * Created by wj on 16/6/21.
  */
 
-public class MainActivityViewModel implements InputFragment.InputFragmentListener {
+public class MainActivityViewModel implements InputFragment.InputFragmentListener, CardViewAdapter.DeleteListener {
 
     private MainActivityView view;
     private RealmModel realmModel;
@@ -43,14 +45,17 @@ public class MainActivityViewModel implements InputFragment.InputFragmentListene
     @Override
     public void onTextSet(String text) {
         Date date = new Date();
-
         Item item = new Item();
+        item.setId(UUID.randomUUID().toString());
         item.setName(text);
         item.setTime(DateFormat.getDateTimeInstance().format(date));
-
         this.view.dataAdd(item);
-        realmModel.setData(item.getName(), item.getTime());
-
+        realmModel.setData(item.getId(), item.getName(), item.getTime());
         inputFragment.dismiss();
+    }
+
+    @Override
+    public void onDeleteClick(String id) {
+        realmModel.deleteDataByID(id);
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ public class MainActivityView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private CardViewAdapter cardViewAdapter;
-    private ItemTouchHelper itemTouchHelper;
-    private ItemTouchHelper.SimpleCallback simpleCallback;
     private List<Item> itemList = new ArrayList<>();
 
     private MainActivityViewModel viewModel;
@@ -37,8 +34,6 @@ public class MainActivityView extends AppCompatActivity {
         binding.setViewModel(viewModel);
 
         setRecyclerView();
-        setItemTouchHelper();
-
         viewModel.onViewCreate();
 
         binding.mainFAB.setOnLongClickListener(new View.OnLongClickListener() {
@@ -69,27 +64,12 @@ public class MainActivityView extends AppCompatActivity {
     private void setRecyclerView() {
         recyclerView = binding.mainRV;
         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         cardViewAdapter = new CardViewAdapter(itemList);
+        cardViewAdapter.setListener(viewModel);
         recyclerView.setAdapter(cardViewAdapter);
-    }
-
-    private void setItemTouchHelper() {
-        simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                //((CardViewAdapter) recyclerView.getAdapter()).remove(position);
-            }
-        };
-
-        itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 }

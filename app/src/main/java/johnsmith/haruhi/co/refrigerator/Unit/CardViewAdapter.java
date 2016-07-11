@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.swipe.SwipeLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +22,19 @@ import johnsmith.haruhi.co.refrigerator.databinding.CardviewBinding;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
 
-    private List<Item> itemList = new ArrayList<>();
-
     public CardViewAdapter(List<Item> itemList) {
         this.itemList = itemList;
+    }
+
+    private List<Item> itemList = new ArrayList<>();
+    private DeleteListener listener;
+
+    public interface DeleteListener {
+        void onDeleteClick(String id);
+    }
+
+    public void setListener(DeleteListener deleteListener) {
+        this.listener = deleteListener;
     }
 
     @Override
@@ -34,9 +45,21 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(CardViewHolder holder, final int position) {
+        holder.getBinding().CVButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Item item = itemList.get(position);
+                if (itemList.contains(item)) {
+                    listener.onDeleteClick(item.getId());
+                    itemList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, itemList.size());
+                }
+            }
+        });
         Item item = itemList.get(position);
-        Log.d("onBindViewHolder", "name: " + item.getName());
+        holder.getBinding().CVSL.setShowMode(SwipeLayout.ShowMode.PullOut);
         holder.getBinding().CVName.setText(item.getName());
         holder.getBinding().CVTime.setText(item.getTime());
     }
@@ -45,14 +68,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     public int getItemCount() {
         Log.d("getItemCount", "size: " + itemList.size());
         return itemList.size();
-    }
-
-    public void remove(int position){
-        Item item = itemList.get(position);
-        if (itemList.contains(item)) {
-            itemList.remove(position);
-            notifyItemRemoved(position);
-        }
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
