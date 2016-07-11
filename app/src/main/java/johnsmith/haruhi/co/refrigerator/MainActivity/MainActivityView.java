@@ -58,7 +58,7 @@ public class MainActivityView extends AppCompatActivity {
 
     public void dataAdd(Item item) {
         itemList.add(item);
-        cardViewAdapter.notifyDataSetChanged();
+        cardViewAdapter.notifyItemInserted(itemList.size());
     }
 
     private void setRecyclerView() {
@@ -67,7 +67,7 @@ public class MainActivityView extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        cardViewAdapter = new CardViewAdapter(itemList);
+        cardViewAdapter = new CardViewAdapter(this, itemList);
         cardViewAdapter.setListener(viewModel);
         recyclerView.setAdapter(cardViewAdapter);
     }

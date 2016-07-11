@@ -37,27 +37,40 @@
                 </LinearLayout>
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:padding="8dp">
 
-                    <TextView
-                        android:id="@+id/CV_name"
+                    <ImageView
+                        android:id="@+id/CV_IV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/TextSize" />
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_sentiment_dissatisfied_36_w" />
 
-                    <TextView
-                        android:id="@+id/CV_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/DateSize" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/CV_IV"
+                        android:orientation="vertical"
+                        android:paddingStart="8dp">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/CV_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/TextSize" />
+
+                        <TextView
+                            android:id="@+id/CV_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/DateSize" />
+                    </LinearLayout>
+                </RelativeLayout>
 
             </com.daimajia.swipe.SwipeLayout>
         </android.support.v7.widget.CardView>

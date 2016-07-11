@@ -1,15 +1,19 @@
 package johnsmith.haruhi.co.refrigerator.Unit;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import johnsmith.haruhi.co.refrigerator.Model.Unit.Item;
@@ -22,12 +26,14 @@ import johnsmith.haruhi.co.refrigerator.databinding.CardviewBinding;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
 
-    public CardViewAdapter(List<Item> itemList) {
-        this.itemList = itemList;
-    }
-
     private List<Item> itemList = new ArrayList<>();
+    private Context context;
     private DeleteListener listener;
+
+    public CardViewAdapter(Context context, List<Item> itemList) {
+        this.itemList = itemList;
+        this.context = context;
+    }
 
     public interface DeleteListener {
         void onDeleteClick(String id);
@@ -59,9 +65,34 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             }
         });
         Item item = itemList.get(position);
+        setIcon(holder.getBinding().CVIV, item);
         holder.getBinding().CVSL.setShowMode(SwipeLayout.ShowMode.PullOut);
         holder.getBinding().CVName.setText(item.getName());
         holder.getBinding().CVTime.setText(item.getTime());
+    }
+
+    private void setIcon(ImageView imageView, Item item) {
+        String day[] = item.getTime().split(" ")[0].split("/");
+        String second[] = item.getTime().split(" ")[1].split(":");
+        Calendar thatDay = Calendar.getInstance();
+        thatDay.set(Calendar.YEAR, Integer.valueOf(day[0]));
+        thatDay.set(Calendar.MONTH, Integer.valueOf(day[1]) - 1);
+        thatDay.set(Calendar.DAY_OF_MONTH, Integer.valueOf(day[2]));
+        thatDay.set(Calendar.HOUR_OF_DAY, Integer.valueOf(second[0]));
+        thatDay.set(Calendar.MINUTE, Integer.valueOf(second[1]));
+        thatDay.set(Calendar.SECOND, Integer.valueOf(second[2]));
+        Calendar today = Calendar.getInstance();
+        long days = (today.getTimeInMillis() - thatDay.getTimeInMillis()) / (24 * 60 * 60 * 1000);
+        if (days >= 14) {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_sentiment_dissatisfied_36_w));
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
+        } else if (days >= 3) {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_sentiment_neutral_36_w));
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorYello));
+        } else {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_sentiment_satisfied_36_w));
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
+        }
     }
 
     @Override
