@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Refrigerator</string>
+    <string name="input_hint">Put this into refrigerator</string>
 </resources>

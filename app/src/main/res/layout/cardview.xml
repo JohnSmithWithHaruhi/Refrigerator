@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/CV_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp">
+
+            <com.daimajia.swipe.SwipeLayout
+                android:id="@+id/CV_SL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/CV_bottom_wrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/CV_Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorRed"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_delete_36_w" />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/CV_IV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_sentiment_dissatisfied_36_w" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/CV_IV"
+                        android:orientation="vertical"
+                        android:paddingStart="8dp">
+
+                        <TextView
+                            android:id="@+id/CV_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/TextSize" />
+
+                        <TextView
+                            android:id="@+id/CV_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/DateSize" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </com.daimajia.swipe.SwipeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+</layout>

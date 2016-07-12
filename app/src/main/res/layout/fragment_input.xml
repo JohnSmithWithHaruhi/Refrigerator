@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/input_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/input_hint"
+        android:maxLength="10"
+        android:maxLines="1" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/input_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Put"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>
