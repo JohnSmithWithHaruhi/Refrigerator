@@ -2,7 +2,8 @@
 
 ## Google Play
 
-Coming soon...
+you can download it from here
+- https://play.google.com/store/apps/details?id=johnsmith.haruhi.co.refrigerator
 
 ## Which libraries I used
 
