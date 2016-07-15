@@ -2,6 +2,7 @@ package johnsmith.haruhi.co.refrigerator.MainActivity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,14 +36,6 @@ public class MainActivityView extends AppCompatActivity {
 
         setRecyclerView();
         viewModel.onViewCreate();
-
-        binding.mainFAB.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                viewModel.onFABLongClick();
-                return true;
-            }
-        });
     }
 
     public void dataSetChanged(List<Item> itemList) {
@@ -51,14 +44,13 @@ public class MainActivityView extends AppCompatActivity {
         cardViewAdapter.notifyDataSetChanged();
     }
 
-    public void dataDeleteAll() {
-        itemList.clear();
-        cardViewAdapter.notifyDataSetChanged();
-    }
-
     public void dataAdd(Item item) {
         itemList.add(item);
         cardViewAdapter.notifyItemInserted(itemList.size());
+    }
+
+    public void showSnackbar(String s) {
+        Snackbar.make(recyclerView, s + " was deleted.", Snackbar.LENGTH_SHORT).show();
     }
 
     private void setRecyclerView() {
