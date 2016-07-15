@@ -1,10 +1,14 @@
 package johnsmith.haruhi.co.refrigerator.MainActivity;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
 
 import johnsmith.haruhi.co.refrigerator.Model.RealmModel;
 import johnsmith.haruhi.co.refrigerator.Model.Unit.Item;
@@ -37,25 +41,21 @@ public class MainActivityViewModel implements InputFragment.InputFragmentListene
         inputFragment.show(this.view.getFragmentManager(), "inputFragment");
     }
 
-    public void onFABLongClick() {
-        realmModel.deleteAllData();
-        view.dataDeleteAll();
-    }
-
     @Override
     public void onTextSet(String text) {
-        Date date = new Date();
         Item item = new Item();
         item.setId(UUID.randomUUID().toString());
         item.setName(text);
-        item.setTime(DateFormat.getDateTimeInstance().format(date));
+        item.setTime(android.text.format.DateFormat.format("yyyy/MM/dd HH:mm:ss", Calendar.getInstance()).toString());
         this.view.dataAdd(item);
         realmModel.setData(item.getId(), item.getName(), item.getTime());
         inputFragment.dismiss();
     }
 
     @Override
-    public void onDeleteClick(String id) {
+    public void onDeleteClick(String name, String id) {
         realmModel.deleteDataByID(id);
+        view.showSnackbar(name);
     }
+
 }
