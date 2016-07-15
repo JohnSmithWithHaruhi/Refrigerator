@@ -36,7 +36,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     }
 
     public interface DeleteListener {
-        void onDeleteClick(String id);
+        void onDeleteClick(String name, String id);
     }
 
     public void setListener(DeleteListener deleteListener) {
@@ -57,7 +57,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             public void onClick(View view) {
                 Item item = itemList.get(position);
                 if (itemList.contains(item)) {
-                    listener.onDeleteClick(item.getId());
+                    listener.onDeleteClick(item.getName(), item.getId());
                     itemList.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, itemList.size());
